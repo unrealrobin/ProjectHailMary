@@ -1,0 +1,17 @@
+# Ignore everything by default
+/*
+
+# Keep the ignore file itself
+!.gitignore
+
+# Keep your readme (support both common names)
+!README.md
+!.readme
+
+# Allow only these folders and all their contents
+!/Source/
+!/Config/
+!/docs/
+!/Source/**
+!/Config/**
+!/docs/**
