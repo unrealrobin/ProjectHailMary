@@ -36,7 +36,4 @@ public:
 
 private:
 	FDelegateHandle MoveSpeedHandle;
-
-	//Setting values from Attribute Set that the character depends on.
-	void InitializeDependentAttributes();
 };

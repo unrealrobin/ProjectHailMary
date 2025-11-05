@@ -53,9 +53,8 @@ void AHmPlayerCharacter::PossessedBy(AController* NewController)
 		if (PS)
 		{
 			InitializeAbilitySystemComponent();
-			//Sets the starting attributes on the server.
-			PS->SetDefaultAttributes_Server();
 			
+			PS->SetDefaultAttributes_Server();
 		}
 	}
 }

@@ -44,13 +44,20 @@ void AHmPlayerState::SetDefaultAttributes_Server()
 			 */
 			FGameplayTag HealthTag = FGameplayTag::RequestGameplayTag("SetByCaller.Init.Health");
 			FGameplayTag MaxHealthTag = FGameplayTag::RequestGameplayTag("SetByCaller.Init.MaxHealth");
-			FGameplayTag Speed = FGameplayTag::RequestGameplayTag("SetByCaller.Init.Speed");
-			FGameplayTag MaxSpeed = FGameplayTag::RequestGameplayTag("SetByCaller.Init.MaxSpeed");
+			FGameplayTag SpeedTag = FGameplayTag::RequestGameplayTag("SetByCaller.Init.Speed");
+			FGameplayTag MaxSpeedTag = FGameplayTag::RequestGameplayTag("SetByCaller.Init.MaxSpeed");
 			
-			DefaultSpec.Data->SetSetByCallerMagnitude(HealthTag, Row->Health);
+			DefaultSpec.Data->SetSetByCallerMagnitude(MaxSpeedTag, Row->MaxSpeed);
 			DefaultSpec.Data->SetSetByCallerMagnitude(MaxHealthTag, Row->MaxHealth);
-			DefaultSpec.Data->SetSetByCallerMagnitude(Speed, Row->Speed);
-			DefaultSpec.Data->SetSetByCallerMagnitude(MaxSpeed, Row->MaxSpeed);
+			DefaultSpec.Data->SetSetByCallerMagnitude(HealthTag, Row->Health);
+			DefaultSpec.Data->SetSetByCallerMagnitude(SpeedTag, Row->Speed);
+
+			/*UE_LOG(LogTemp, Warning, TEXT(" Setting Default Attributes MaxSpeed: %f, MaxHealth: %f, Health: %f, Speed: %f"),
+								 Row->MaxSpeed,
+								 Row->MaxHealth,
+								 Row->Health,
+								 Row->Speed)*/
+			
 			
 			HmAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*DefaultSpec.Data.Get());
 			UE_LOG(LogTemp, Warning, TEXT("Initialized Attributes From Data Table."));
