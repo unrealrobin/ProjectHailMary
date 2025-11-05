@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "HmPlayerState.generated.h"
 
+class UGameplayEffect;
 class UHmPlayerInitAttributes;
 class UHmAttributeSet;
 class UHmAbilitySystemComponent;
@@ -26,6 +27,9 @@ public:
 	TObjectPtr<UDataTable> InitAttributes = nullptr;
 	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attributes")
+	TSubclassOf<UGameplayEffect> DefaultAttributeEffect;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FName InitAttributesRowName = FName("Initial");
 	
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
@@ -37,5 +41,5 @@ public:
 	TObjectPtr<UHmAttributeSet> HmAttributeSet;
 
 	UFUNCTION()
-	void SetInitialAttributesOnAttributeSet_Server();
+	void SetDefaultAttributes_Server();
 };

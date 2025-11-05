@@ -26,18 +26,35 @@ UAbilitySystemComponent* AHmPlayerState::GetAbilitySystemComponent() const
 	return HmAbilitySystemComponent;
 }
 
-void AHmPlayerState::SetInitialAttributesOnAttributeSet_Server()
+void AHmPlayerState::SetDefaultAttributes_Server()
 {
-	if (HasAuthority() && IsValid(InitAttributes))
+	if (HasAuthority() && IsValid(InitAttributes) && IsValid(DefaultAttributeEffect))
 	{
 		const FPlayerInitAttributes* Row = InitAttributes->FindRow<FPlayerInitAttributes>(InitAttributesRowName, TEXT("Init"));
 		if (Row && HmAttributeSet)
 		{
+			FGameplayEffectSpecHandle DefaultSpec = HmAbilitySystemComponent->MakeOutgoingSpec(
+				DefaultAttributeEffect,
+				1.f,
+				HmAbilitySystemComponent->MakeEffectContext());
+
+			/*
+			 * Tags Required for SetByCaller Modifier
+			 * We use this type (SetByCaller) because its dynamic and uses a DT to set the values.
+			 */
+			FGameplayTag HealthTag = FGameplayTag::RequestGameplayTag("SetByCaller.Init.Health");
+			FGameplayTag MaxHealthTag = FGameplayTag::RequestGameplayTag("SetByCaller.Init.MaxHealth");
+			FGameplayTag Speed = FGameplayTag::RequestGameplayTag("SetByCaller.Init.Speed");
+			FGameplayTag MaxSpeed = FGameplayTag::RequestGameplayTag("SetByCaller.Init.MaxSpeed");
+			
+			DefaultSpec.Data->SetSetByCallerMagnitude(HealthTag, Row->Health);
+			DefaultSpec.Data->SetSetByCallerMagnitude(MaxHealthTag, Row->MaxHealth);
+			DefaultSpec.Data->SetSetByCallerMagnitude(Speed, Row->Speed);
+			DefaultSpec.Data->SetSetByCallerMagnitude(MaxSpeed, Row->MaxSpeed);
+			
+			HmAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*DefaultSpec.Data.Get());
 			UE_LOG(LogTemp, Warning, TEXT("Initialized Attributes From Data Table."));
-			HmAttributeSet->InitMaxHealth(Row->MaxHealth);
-			HmAttributeSet->InitMaxSpeed(Row->MaxSpeed);
-			HmAttributeSet->InitHealth(FMath::Clamp(Row->Health, 0.0f, Row->MaxHealth));
-			HmAttributeSet->InitSpeed(FMath::Clamp(Row->Speed, 0.0f, Row->MaxSpeed));
+			
 		}
 	}
 }
