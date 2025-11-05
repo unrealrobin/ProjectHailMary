@@ -6,23 +6,30 @@
 #include "HmCharacterBase.h"
 #include "HmPlayerCharacter.generated.h"
 
+class UHmAbilitySystemComponent;
+
 UCLASS()
 class PROJECTHAILMARY_API AHmPlayerCharacter : public AHmCharacterBase
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	AHmPlayerCharacter();
+	void InitializeAbilitySystemComponent();
+	virtual void Tick(float DeltaTime) override;
+	
 
+	UPROPERTY(Transient)
+	TObjectPtr<UHmAbilitySystemComponent> ASC = nullptr;
+	
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	/*Server Calls*/
+	virtual void PossessedBy(AController* NewController) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	/*Client Calls*/
+	virtual void OnRep_PlayerState() override;
+	
 };

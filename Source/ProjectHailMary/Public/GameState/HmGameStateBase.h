@@ -13,4 +13,5 @@ UCLASS()
 class PROJECTHAILMARY_API AHmGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
+	
 };
