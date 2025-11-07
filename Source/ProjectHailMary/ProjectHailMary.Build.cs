@@ -18,7 +18,8 @@ public class ProjectHailMary : ModuleRules
 			"GameplayTags",
 			"Json",
 			"JsonUtilities",
-			"UMG"
+			"UMG", 
+			"AIModule"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

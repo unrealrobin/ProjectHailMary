@@ -4,11 +4,15 @@
 #include "PlayerState/HmPlayerState.h"
 #include "Components/HmAbilitySystemComponent.h"
 #include "Controllers/HmPlayerController.h"
+#include "Data/PlayerAbiltiesDataAsset.h"
 // Sets default values
 AHmPlayerCharacter::AHmPlayerCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	ProjectileStartLocationSceneComponent = CreateDefaultSubobject<USceneComponent>("Projectile Start Location Scene Component");
+	ProjectileStartLocationSceneComponent->SetupAttachment(RootComponent);
 }
 void AHmPlayerCharacter::BeginPlay()
 {
@@ -37,6 +41,8 @@ void AHmPlayerCharacter::InitializeAbilitySystemComponent()
 
 		//Server and client need this in order for prediction and replication to work
 		ASC->InitAbilityActorInfo(PS, this);
+
+		ASC->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	}
 }
 
@@ -55,6 +61,10 @@ void AHmPlayerCharacter::PossessedBy(AController* NewController)
 			InitializeAbilitySystemComponent();
 			
 			PS->SetDefaultAttributes_Server();
+
+			//Ensure timing works here.
+			TSet<FAbilityInputMap> MappingSet = Cast<AHmPlayerController>(NewController)->PlayerAbilityDataAsset->Mappings;
+			PS->GrantInitialAbilities(MappingSet);
 		}
 	}
 }
@@ -76,6 +86,7 @@ void AHmPlayerCharacter::OnRep_PlayerState()
 		}
 	}
 }
+
 
 
 

@@ -5,14 +5,13 @@
 #include "Components/HmAbilitySystemComponent.h"
 #include "Components/HmAttributeSet.h"
 #include "ProjectHailMary/Data/HmPlayerInitAttributes.h"
+#include "Data/HmAbilitiesList.h"
+#include "Data/PlayerAbiltiesDataAsset.h"
+#include "GAS/Abilties/HmGA_ShootProjectile.h"
 
 AHmPlayerState::AHmPlayerState()
 {
 	HmAbilitySystemComponent = CreateDefaultSubobject<UHmAbilitySystemComponent>("ASC");
-	if (!HmAbilitySystemComponent)
-	{
-		UE_LOG(LogTemp, Error, TEXT("Failed to create AbilitySystemComponent"));
-	}
 	HmAbilitySystemComponent->SetIsReplicated(true);
 	HmAbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 
@@ -62,6 +61,30 @@ void AHmPlayerState::SetDefaultAttributes_Server()
 			HmAbilitySystemComponent->ApplyGameplayEffectSpecToSelf(*DefaultSpec.Data.Get());
 			UE_LOG(LogTemp, Warning, TEXT("Initialized Attributes From Data Table."));
 			
+		}
+	}
+}
+
+void AHmPlayerState::GrantInitialAbilities(TSet<FAbilityInputMap> Mappings)
+{
+	if (!HasAuthority() || !HmAbilitySystemComponent) return;
+
+	// Clear old abilities 
+	HmAbilitySystemComponent->ClearAllAbilities();
+
+	// Grant new ones
+	int32 InputID = 0;
+	for (const FAbilityInputMap& Map : Mappings)
+	{
+		if (Map.AbilityClass)
+		{
+			FGameplayAbilitySpec Spec(
+				Map.AbilityClass,
+				1,           
+				InputID++,   // InputID
+				this         
+			);
+			HmAbilitySystemComponent->GiveAbility(Spec);
 		}
 	}
 }

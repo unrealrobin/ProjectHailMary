@@ -17,8 +17,10 @@ public:
 	AHmPlayerCharacter();
 	void InitializeAbilitySystemComponent();
 	virtual void Tick(float DeltaTime) override;
-	
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	USceneComponent* ProjectileStartLocationSceneComponent;
+	
 	UPROPERTY(Transient)
 	TObjectPtr<UHmAbilitySystemComponent> ASC = nullptr;
 	

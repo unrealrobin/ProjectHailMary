@@ -26,6 +26,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attributes")
 	TObjectPtr<UDataTable> InitAttributes = nullptr;
 	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Abilities")
+	TObjectPtr<UDataTable> AbilitiesList = nullptr;
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Attributes")
 	TSubclassOf<UGameplayEffect> DefaultAttributeEffect;
 	
@@ -42,4 +45,7 @@ public:
 
 	UFUNCTION()
 	void SetDefaultAttributes_Server();
+
+	UFUNCTION()
+	void GrantInitialAbilities(TSet<FAbilityInputMap> Mappings);
 };
