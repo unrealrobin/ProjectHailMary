@@ -1,7 +1,7 @@
 // Property of Paracosm LLC and Robin Lifshitz.
 
 
-#include "GAS/Abilties/HmGA_Base.h"
+#include "GAS/Abilities/HmGA_Base.h"
 #include "AbilitySystemComponent.h"
 
 bool UHmGA_Base::CommitChecked()

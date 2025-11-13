@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "HmGA_Base.h"
+#include "GAS/Abilities/HmGA_Base.h"
 #include "HmGA_ShootProjectile.generated.h"
 
 /**

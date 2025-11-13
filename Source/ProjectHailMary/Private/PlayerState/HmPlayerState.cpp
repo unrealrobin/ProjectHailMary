@@ -7,7 +7,6 @@
 #include "ProjectHailMary/Data/HmPlayerInitAttributes.h"
 #include "Data/HmAbilitiesList.h"
 #include "Data/PlayerAbiltiesDataAsset.h"
-#include "GAS/Abilties/HmGA_ShootProjectile.h"
 
 AHmPlayerState::AHmPlayerState()
 {
@@ -51,7 +50,7 @@ void AHmPlayerState::SetDefaultAttributes_Server()
 			DefaultSpec.Data->SetSetByCallerMagnitude(HealthTag, Row->Health);
 			DefaultSpec.Data->SetSetByCallerMagnitude(SpeedTag, Row->Speed);
 
-			/*UE_LOG(LogTemp, Warning, TEXT(" Setting Default Attributes MaxSpeed: %f, MaxHealth: %f, Health: %f, Speed: %f"),
+			/*UE_LOG(LogTemp, Warning, TEXT("Setting Default Attributes MaxSpeed: %f, MaxHealth: %f, Health: %f, Speed: %f"),
 								 Row->MaxSpeed,
 								 Row->MaxHealth,
 								 Row->Health,

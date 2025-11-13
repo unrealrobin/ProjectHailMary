@@ -1,6 +1,6 @@
 // Property of Paracosm LLC and Robin Lifshitz.
 
-#include "GAS/Abilties/HmGA_ShootProjectile.h"
+#include "GAS/Abilities/Player/HmGA_ShootProjectile.h"
 #include "Characters/HmPlayerCharacter.h"
 #include "Projectile/HmProjectileBase.h"
 
