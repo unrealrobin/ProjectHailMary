@@ -10,7 +10,7 @@
 #include "Data/HmAbilitiesList.h"
 #include "Environment/Arena/HmArenaVolumeRectangle.h"
 #include "Kismet/GameplayStatics.h"
-#include "ProjectHailMary/Data/HmPlayerInitAttributes.h"
+#include "Data/HmPlayerInitAttributes.h"
 
 
 struct FPlayerInitAttributes;

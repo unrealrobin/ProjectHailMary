@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GAS/Abilities/HmGA_Base.h"
-#include "Types/BossTelegraphData.h"
+#include "Types/BossAbilityTelegraphData.h"
 #include "HmGaBossRectAbility.generated.h"
 
 class AHmAbilityTelegraphBase;
@@ -17,14 +17,12 @@ class PROJECTHAILMARY_API UHmGaBossRectAbility : public UHmGA_Base
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
-	FBossTelegraphData Data;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
 	TSubclassOf<UGameplayEffect> EffectToApplyClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
-	FBossTelegraphData AbilityData;
+	FBossAbilityTelegraphData AbilityData;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability")
 	TSubclassOf<AHmAbilityTelegraphBase> AbilityTelegraphClass;

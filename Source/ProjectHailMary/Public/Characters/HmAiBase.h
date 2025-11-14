@@ -41,10 +41,10 @@ public:
 	TSubclassOf<UGameplayEffect> DefaultAttributeEffectClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	USceneComponent* AiTargetSceneComponent;
+	TObjectPtr<USceneComponent> AiTargetSceneComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
-	UBoxComponent* CollisionBoxComponent;
+	TObjectPtr<UBoxComponent> CollisionBoxComponent;
 	
 	virtual void Tick(float DeltaTime) override;
 

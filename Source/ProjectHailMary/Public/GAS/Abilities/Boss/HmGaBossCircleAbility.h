@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GAS/Abilities/HmGA_Base.h"
-#include "Types/BossTelegraphData.h"
+#include "Types/BossAbilityTelegraphData.h"
 #include "HmGaBossCircleAbility.generated.h"
 
 /**
@@ -20,5 +20,5 @@ public:
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
-	FBossTelegraphData AbilityData;
+	FBossAbilityTelegraphData AbilityData;
 };

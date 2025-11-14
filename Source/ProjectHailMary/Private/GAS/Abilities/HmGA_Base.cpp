@@ -3,6 +3,7 @@
 
 #include "GAS/Abilities/HmGA_Base.h"
 #include "AbilitySystemComponent.h"
+#include "Data/HmAbilityTelegraphDT.h"
 
 bool UHmGA_Base::CommitChecked()
 {
@@ -16,6 +17,29 @@ bool UHmGA_Base::CommitChecked()
 	if (!CanActivateAbility(CurrentSpecHandle, CurrentActorInfo)) return false;
 	
 	return CommitAbility(CurrentSpecHandle, CurrentActorInfo, GetCurrentActivationInfo(), nullptr);
+}
+
+
+void UHmGA_Base::ConstructAbilityData(FName AbilityRowName, FBossAbilityTelegraphData& InData) const
+{
+	if (AbilityTelegraphDataTable)
+	{
+		auto* Row = AbilityTelegraphDataTable->FindRow<FTelegraphData>(AbilityRowName, TEXT("Ability Initialization"));
+		if (Row)
+		{
+			InData.LockTime = Row->TelegraphData.LockTime;
+			InData.FollowTime = Row->TelegraphData.FollowTime;
+			InData.BoxHeight = Row->TelegraphData.BoxHeight;
+			InData.BoxWidth = Row->TelegraphData.BoxWidth;
+			InData.BoxLength = Row->TelegraphData.BoxLength;
+			InData.AngleDeg = Row->TelegraphData.AngleDeg;
+			InData.Radius = Row->TelegraphData.Radius;
+			InData.OpacityFill = Row->TelegraphData.OpacityFill;
+			InData.OpacityEmpty = Row->TelegraphData.OpacityEmpty;
+			InData.FillColor = Row->TelegraphData.FillColor;
+			InData.EmptyColor = Row->TelegraphData.EmptyColor;
+		}
+	}
 }
 
 FGameplayEffectSpecHandle UHmGA_Base::MakeGESpec(UAbilitySystemComponent* ASC, TSubclassOf<UGameplayEffect> GEClass, float Level, const TMap<FGameplayTag, float>* inSetByCallerMap)

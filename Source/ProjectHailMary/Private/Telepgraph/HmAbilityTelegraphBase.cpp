@@ -3,6 +3,7 @@
 
 #include "Telepgraph/HmAbilityTelegraphBase.h"
 
+#include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Net/UnrealNetwork.h"
@@ -14,7 +15,7 @@ void AHmAbilityTelegraphBase::GetLifetimeReplicatedProps(TArray<class FLifetimeP
 	DOREPLIFETIME(AHmAbilityTelegraphBase, Data);
 }
 
-void AHmAbilityTelegraphBase::OnRep_BossTelegraphData(FBossTelegraphData OldBossTelegraphData)
+void AHmAbilityTelegraphBase::OnRep_BossTelegraphData(FBossAbilityTelegraphData OldBossTelegraphData)
 {
 	FVector DecalSize(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
 	ChangeDecalSize(DecalSize);
@@ -38,6 +39,15 @@ AHmAbilityTelegraphBase::AHmAbilityTelegraphBase()
 	DecalComponent->SetupAttachment(RootComponent);
 	DecalComponent->SetIsReplicated(true);
 
+	/*
+	 * Dbug Box
+	 */
+	BoxComponent = CreateDefaultSubobject<UBoxComponent>("Debug Box");
+	BoxComponent->SetupAttachment(RootComponent);
+	BoxComponent->SetVisibility(true);
+	BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
+	
 	//Will call an initial Location Adjustment, making the Scene Component at the edge of the decal component
 	//making the scene component a "Proxy Pivot Point"
 	//When then use the scene component to handle rotation of the decal.
@@ -55,6 +65,8 @@ void AHmAbilityTelegraphBase::ChangeDecalSize(FVector NewDecalSize)
 	DecalComponent->DecalSize.Y = NewDecalSize.Y;
 	DecalComponent->DecalSize.Z = NewDecalSize.Z;
 
+	BoxComponent->SetBoxExtent(NewDecalSize);
+
 	AdjustDecalComponentOffsetLocation(DecalComponent->DecalSize);
 }
 
@@ -70,6 +82,7 @@ void AHmAbilityTelegraphBase::AdjustDecalComponentOffsetLocation(FVector DecalCo
 {
 	FVector OffsetLocation = FVector(DecalCompSize.X, 0.f, 0.f);
 	DecalComponent->SetRelativeLocation(OffsetLocation);
+	BoxComponent->SetRelativeLocation(OffsetLocation);
 }
 
 // Called every frame

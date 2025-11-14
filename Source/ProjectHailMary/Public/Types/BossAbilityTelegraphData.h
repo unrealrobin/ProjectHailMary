@@ -1,10 +1,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BossTelegraphData.generated.h"
+#include "BossAbilityTelegraphData.generated.h"
 
 USTRUCT(BlueprintType)
-struct FBossTelegraphData
+struct FBossAbilityTelegraphData
 {
 	GENERATED_BODY()
 	
@@ -31,15 +31,15 @@ struct FBossTelegraphData
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
 	float BoxHeight;
 
-	FBossTelegraphData() : AngleDeg(0),
-	                       Radius(0),
-	                       FollowTime(0),
-	                       OpacityFill(0),
-	                       OpacityEmpty(0),
-	                       FillColor(FLinearColor::White),
-	                       EmptyColor(FLinearColor::Gray),
-	                       BoxLength(0),
-	                       BoxWidth(0), BoxHeight(0)
+	FBossAbilityTelegraphData() : AngleDeg(0), Radius(0),
+	                              FollowTime(0),
+	                              LockTime(0),
+	                              OpacityFill(0),
+	                              OpacityEmpty(0),
+	                              FillColor(FLinearColor::White),
+	                              EmptyColor(FLinearColor::Gray),
+	                              BoxLength(0),
+	                              BoxWidth(0), BoxHeight(0)
 
 	{
 	}

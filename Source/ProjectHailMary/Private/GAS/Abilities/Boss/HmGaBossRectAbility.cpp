@@ -74,28 +74,29 @@ void UHmGaBossRectAbility::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 		if (!TelegraphActor) EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 
 		//Data Prep for Telegraph
-		Data = FBossTelegraphData();
-		Data.BoxLength = 2000.0f;
-		Data.BoxWidth = 100.0f;
-		Data.BoxHeight = 300.0f;
-		Data.FollowTime = 10.0f;
-		Data.LockTime = 2.0f;
-
-		//Initializing Defaults on Telegraph Actor
-		TelegraphActor->TargetActor = RandomPlayerCharacter;
+		Data = FBossAbilityTelegraphData();
+		ConstructAbilityData(AbilityTelegraphDataTableRowName, Data);
 		TelegraphActor->Data = Data;
 		FVector DecalSize = FVector(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
+		//ServerSide Call
 		TelegraphActor->ChangeDecalSize(DecalSize);
+		
+		//Initializing Defaults on Telegraph Actor
+		TelegraphActor->TargetActor = RandomPlayerCharacter;
 		TelegraphActor->FinishSpawning(T);
 		
 
 		//Starts Following Actor Via Tick of Telegraph Actor.
-		UAbilityTask_WaitDelay* FollowTimeDelay = UAbilityTask_WaitDelay::WaitDelay(this, 3.0f);
+		UAbilityTask_WaitDelay* FollowTimeDelay = UAbilityTask_WaitDelay::WaitDelay(this, Data.FollowTime);
 
 		if (FollowTimeDelay)
 		{
 			FollowTimeDelay->OnFinish.AddDynamic(this, &UHmGaBossRectAbility::HandleLock);
 			FollowTimeDelay->ReadyForActivation();
+		}
+		else
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		}
 	}
 	else

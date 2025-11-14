@@ -4,7 +4,7 @@
 #include "ProjectHailMary/Public/PlayerState/HmPlayerState.h"
 #include "Components/HmAbilitySystemComponent.h"
 #include "Components/HmAttributeSet.h"
-#include "ProjectHailMary/Data/HmPlayerInitAttributes.h"
+#include "Data/HmPlayerInitAttributes.h"
 #include "Data/HmAbilitiesList.h"
 #include "Data/PlayerAbiltiesDataAsset.h"
 
