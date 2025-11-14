@@ -27,7 +27,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Arena")
 	AActor* TargetActor = nullptr;
 
-	UPROPERTY(ReplicatedUsing = OnRep_BossTelegraphData)
+	UPROPERTY(VisibleAnywhere, Category="TelegraphData",ReplicatedUsing = OnRep_BossTelegraphData)
 	FBossAbilityTelegraphData Data;
 
 	UFUNCTION()
@@ -38,22 +38,22 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal Comp")
 	TObjectPtr<UDecalComponent> DecalComponent;
-
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal Comp")
 	TObjectPtr<UBoxComponent> BoxComponent;
 	
 	//The Base Material to be added in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal Material")
-	TObjectPtr<UMaterial> DecalMaterial;
+	TObjectPtr<UMaterial> DecalMaterial = nullptr;
 
 	//The Dynamic Material Converter in C++ and Editable via Encounter Graph
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal Material")
-	TObjectPtr<UMaterialInstanceDynamic> DynamicDecalMaterial;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Decal Material")
+	TObjectPtr<UMaterialInstanceDynamic> DynamicDecalMaterial = nullptr;
 
 	UFUNCTION()
 	void ChangeDecalSize(FVector NewDecalSize);
 
+	virtual void Tick(float DeltaTime) override;
 protected:
 
 	virtual void BeginPlay() override;
@@ -61,7 +61,10 @@ protected:
 	UFUNCTION()
 	void AdjustDecalComponentOffsetLocation(FVector DecalCompSize);
 
-public:
 
-	virtual void Tick(float DeltaTime) override;
+private:
+	void InitializeDynamicMaterial();
+	void UpdateDynamicMaterialInstance_Server();
+	void UpdateDynamicMaterialInstance_Client();
+
 };

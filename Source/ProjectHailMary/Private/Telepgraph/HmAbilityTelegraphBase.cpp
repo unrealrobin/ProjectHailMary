@@ -2,7 +2,6 @@
 
 
 #include "Telepgraph/HmAbilityTelegraphBase.h"
-
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -19,6 +18,11 @@ void AHmAbilityTelegraphBase::OnRep_BossTelegraphData(FBossAbilityTelegraphData 
 {
 	FVector DecalSize(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
 	ChangeDecalSize(DecalSize);
+
+	UE_LOG(LogTemp, Warning, TEXT("OnRep for Data fired."))
+	//Apply Dynamic Material with Colors from Data.
+	
+	UpdateDynamicMaterialInstance_Client();
 }
 
 // Sets default values
@@ -53,11 +57,12 @@ AHmAbilityTelegraphBase::AHmAbilityTelegraphBase()
 	//When then use the scene component to handle rotation of the decal.
 	ChangeDecalSize(DecalComponent->DecalSize);
 
-	DecalComponent->SetDecalMaterial(DecalMaterial);
+	if (DecalMaterial)
+	{
+		DecalComponent->SetDecalMaterial(DecalMaterial);
+	}
 	
 }
-
-
 
 void AHmAbilityTelegraphBase::ChangeDecalSize(FVector NewDecalSize)
 {
@@ -74,7 +79,8 @@ void AHmAbilityTelegraphBase::ChangeDecalSize(FVector NewDecalSize)
 void AHmAbilityTelegraphBase::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("telegraph actor spawned."))
+	UE_LOG(LogTemp, Warning, TEXT("TelegraphActor BeginPlay on %s"),HasAuthority() ? TEXT("SERVER") : TEXT("CLIENT"));
+	InitializeDynamicMaterial();
 	
 }
 
@@ -83,6 +89,49 @@ void AHmAbilityTelegraphBase::AdjustDecalComponentOffsetLocation(FVector DecalCo
 	FVector OffsetLocation = FVector(DecalCompSize.X, 0.f, 0.f);
 	DecalComponent->SetRelativeLocation(OffsetLocation);
 	BoxComponent->SetRelativeLocation(OffsetLocation);
+}
+
+void AHmAbilityTelegraphBase::InitializeDynamicMaterial()
+{
+	if (DecalComponent && !DynamicDecalMaterial)
+	{
+		DynamicDecalMaterial = UMaterialInstanceDynamic::Create(DecalMaterial, this);
+		if (DynamicDecalMaterial)
+		{
+			DecalComponent->SetDecalMaterial(DynamicDecalMaterial);
+			//UE_LOG(LogTemp, Warning, TEXT("Dynamic Material is Initialized & Valid. %s"), HasAuthority() ? TEXT("- SERVER") : TEXT("- CLIENT"))
+			UpdateDynamicMaterialInstance_Server();
+		}
+	}
+}
+
+void AHmAbilityTelegraphBase::UpdateDynamicMaterialInstance_Server()
+{
+	if (HasAuthority())
+	{
+		DynamicDecalMaterial->SetVectorParameterValue("TelegraphColorBase", Data.TelegraphColorBase);
+		DynamicDecalMaterial->SetVectorParameterValue("TelegraphColorEmis", Data.TelegraphColorEmis);
+		DynamicDecalMaterial->SetScalarParameterValue("TelegraphOpac", Data.TelegraphOpac);
+	}
+}
+
+void AHmAbilityTelegraphBase::UpdateDynamicMaterialInstance_Client()
+{
+	if (!HasAuthority())
+	{
+		if (!DynamicDecalMaterial)
+		{
+			InitializeDynamicMaterial();
+		}
+		
+		//Are set in the Init Telegraph Data Table Row for the Ability. Can be experimented w/ @ runtime through Encounter Editor.
+		DynamicDecalMaterial->SetVectorParameterValue("TelegraphColorBase", Data.TelegraphColorBase);
+		DynamicDecalMaterial->SetVectorParameterValue("TelegraphColorEmis", Data.TelegraphColorEmis);
+		DynamicDecalMaterial->SetScalarParameterValue("TelegraphOpac", Data.TelegraphOpac);
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("TelegraphActor UpdateDynamicMaterialInstance Color on %s"),HasAuthority() ? TEXT("SERVER") : TEXT("CLIENT"));
+	
 }
 
 // Called every frame

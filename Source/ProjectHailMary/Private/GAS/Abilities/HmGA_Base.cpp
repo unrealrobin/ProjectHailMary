@@ -36,8 +36,9 @@ void UHmGA_Base::ConstructAbilityData(FName AbilityRowName, FBossAbilityTelegrap
 			InData.Radius = Row->TelegraphData.Radius;
 			InData.OpacityFill = Row->TelegraphData.OpacityFill;
 			InData.OpacityEmpty = Row->TelegraphData.OpacityEmpty;
-			InData.FillColor = Row->TelegraphData.FillColor;
-			InData.EmptyColor = Row->TelegraphData.EmptyColor;
+			InData.TelegraphColorBase = Row->TelegraphData.TelegraphColorBase;
+			InData.TelegraphColorEmis = Row->TelegraphData.TelegraphColorEmis;
+			InData.TelegraphOpac = Row->TelegraphData.TelegraphOpac;
 		}
 	}
 }

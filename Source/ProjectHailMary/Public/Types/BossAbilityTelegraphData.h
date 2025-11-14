@@ -21,9 +21,11 @@ struct FBossAbilityTelegraphData
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
 	float OpacityEmpty;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
-	FLinearColor FillColor;
+	FLinearColor TelegraphColorBase;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
-	FLinearColor EmptyColor;
+	FLinearColor TelegraphColorEmis;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
+	float TelegraphOpac;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
 	float BoxLength;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
@@ -35,9 +37,7 @@ struct FBossAbilityTelegraphData
 	                              FollowTime(0),
 	                              LockTime(0),
 	                              OpacityFill(0),
-	                              OpacityEmpty(0),
-	                              FillColor(FLinearColor::White),
-	                              EmptyColor(FLinearColor::Gray),
+	                              OpacityEmpty(0), TelegraphColorBase(FLinearColor::Blue), TelegraphColorEmis(FLinearColor::Blue), TelegraphOpac(1.f),
 	                              BoxLength(0),
 	                              BoxWidth(0), BoxHeight(0)
 
