@@ -35,6 +35,7 @@ void UHmTaskBossActivateAbility::OnAbilityEnded(const FAbilityEndedData& EndedDa
 	}
 	
 	FinishLatentTask(*BTComp, EBTNodeResult::Failed);
+	UE_LOG(LogTemp, Warning, TEXT("Ability %s ended as failed."), *Ability->GetName())
 	
 }
 

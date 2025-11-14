@@ -7,6 +7,7 @@
 #include "Characters/HmCharacterBase.h"
 #include "HmAiBase.generated.h"
 
+class AHmArenaVolumeRectangle;
 class UBoxComponent;
 class UGameplayEffect;
 class UHmAttributeSet;
@@ -44,8 +45,6 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	UBoxComponent* CollisionBoxComponent;
-
-	
 	
 	virtual void Tick(float DeltaTime) override;
 
@@ -61,11 +60,16 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY()
+	TObjectPtr<AHmArenaVolumeRectangle> ArenaVolume = nullptr;
+
 private:
 	
 	void GrantBossAbilities_Server();
 
 	void InitAttributes_Server();
+
+	void GetArenaVolume_Server();
 
 	
 };

@@ -8,6 +8,8 @@
 #include "Components/HmAbilitySystemComponent.h"
 #include "Components/HmAttributeSet.h"
 #include "Data/HmAbilitiesList.h"
+#include "Environment/Arena/HmArenaVolumeRectangle.h"
+#include "Kismet/GameplayStatics.h"
 #include "ProjectHailMary/Data/HmPlayerInitAttributes.h"
 
 
@@ -155,6 +157,19 @@ void AHmAiBase::InitAttributes_Server()
 			AiASC->ApplyGameplayEffectSpecToSelf(*DefaultSpec.Data.Get());
 			UE_LOG(LogTemp, Warning, TEXT("Initialized Attributes From Data Table."));
 			
+		}
+	}
+}
+
+void AHmAiBase::GetArenaVolume_Server()
+{
+	if (!ArenaVolume)
+	{
+		AActor* ArenaVolumeActor = UGameplayStatics::GetActorOfClass(GetWorld(), AHmArenaVolumeRectangle::StaticClass());
+		ArenaVolume = Cast<AHmArenaVolumeRectangle>(ArenaVolumeActor);
+		if (!ArenaVolume)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("HmAiBase - GetArenaVolume_Server - Could not retrieve Arena Volume Actor."))
 		}
 	}
 }
