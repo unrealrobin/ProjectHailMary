@@ -22,6 +22,7 @@ bool UHmGA_Base::CommitChecked()
 
 void UHmGA_Base::ConstructAbilityData(FName AbilityRowName, FBossAbilityTelegraphData& InData) const
 {
+	//Here we can check whether to use data from the gameplay subsystem which is modifed at runtime or from the Data table.
 	if (AbilityTelegraphDataTable)
 	{
 		auto* Row = AbilityTelegraphDataTable->FindRow<FTelegraphData>(AbilityRowName, TEXT("Ability Initialization"));
@@ -34,8 +35,6 @@ void UHmGA_Base::ConstructAbilityData(FName AbilityRowName, FBossAbilityTelegrap
 			InData.BoxLength = Row->TelegraphData.BoxLength;
 			InData.AngleDeg = Row->TelegraphData.AngleDeg;
 			InData.Radius = Row->TelegraphData.Radius;
-			InData.OpacityFill = Row->TelegraphData.OpacityFill;
-			InData.OpacityEmpty = Row->TelegraphData.OpacityEmpty;
 			InData.TelegraphColorBase = Row->TelegraphData.TelegraphColorBase;
 			InData.TelegraphColorEmis = Row->TelegraphData.TelegraphColorEmis;
 			InData.TelegraphOpac = Row->TelegraphData.TelegraphOpac;

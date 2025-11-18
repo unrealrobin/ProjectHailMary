@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Abilities/GameplayAbility.h"
 #include "Characters/HmAiBase.h"
 #include "Engine/DataTable.h"
 #include "GAS/Abilities/HmGA_Base.h"

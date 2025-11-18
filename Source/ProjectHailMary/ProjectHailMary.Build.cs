@@ -19,7 +19,9 @@ public class ProjectHailMary : ModuleRules
 			"Json",
 			"JsonUtilities",
 			"UMG", 
-			"AIModule"
+			"AIModule",
+			"Slate",
+			"SlateCore"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

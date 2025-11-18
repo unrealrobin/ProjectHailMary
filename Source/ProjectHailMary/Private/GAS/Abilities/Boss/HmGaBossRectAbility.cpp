@@ -6,7 +6,9 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Characters/HmAiBase.h"
 #include "Controllers/HmAiControllerBase.h"
+#include "Kismet/GameplayStatics.h"
 #include "Telepgraph/HmAbilityTelegraphBase.h"
+#include "Telepgraph/DevelopmentOnly/HmTelegraphCache_Rep.h"
 
 void UHmGaBossRectAbility::ApplyEffectToTargets()
 {
@@ -75,8 +77,25 @@ void UHmGaBossRectAbility::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 		//Data Prep for Telegraph
 		Data = FBossAbilityTelegraphData();
-		ConstructAbilityData(AbilityTelegraphDataTableRowName, Data);
-		TelegraphActor->Data = Data;
+
+		//Checking if Telegraph Manager is In World. Simple changing where the Original Data Comes From.
+		//Telegraph Manager Actor Data can be modified at runtime.
+		//Development
+		AHmTelegraphCache_Rep* TelegraphManager = Cast<AHmTelegraphCache_Rep>(UGameplayStatics::GetActorOfClass(GetWorld(), AHmTelegraphCache_Rep::StaticClass()));
+		if (TelegraphManager)
+		{
+			Data = TelegraphManager->TelegraphCacheData;
+			TelegraphActor->Data = Data;
+		}
+		else
+		{
+			//Uses the Constructed Data Struct from the Data Table.
+			//Production
+			ConstructAbilityData(AbilityTelegraphDataTableRowName, Data);
+			TelegraphActor->Data = Data;
+		}
+		
+		
 		FVector DecalSize = FVector(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
 		//ServerSide Call
 		TelegraphActor->ChangeDecalSize(DecalSize);
