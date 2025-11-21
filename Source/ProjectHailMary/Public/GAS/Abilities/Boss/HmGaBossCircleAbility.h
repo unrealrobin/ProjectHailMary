@@ -7,6 +7,8 @@
 #include "Types/BossAbilityTelegraphData.h"
 #include "HmGaBossCircleAbility.generated.h"
 
+class AHmAbilityTelegraphBase;
+
 /**
  * 
  */
@@ -16,9 +18,23 @@ class PROJECTHAILMARY_API UHmGaBossCircleAbility : public UHmGA_Base
 	GENERATED_BODY()
 
 public:
+	
+	
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 	virtual void EndAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, bool bReplicateEndAbility, bool bWasCancelled) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
 	FBossAbilityTelegraphData AbilityData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+	TSubclassOf<AHmAbilityTelegraphBase> AbilityTelegraphClass;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Ability Data")
+	AHmAbilityTelegraphBase* TelegraphActor;
+
+private:
+	UFUNCTION()
+	void ApplyEffectToTargets();
+	UFUNCTION()
+	void HandleLock();
 };

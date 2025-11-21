@@ -22,7 +22,8 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widgets")
 	TObjectPtr<UHmAbilityTelegraphTweaker> WidgetTweakerRef;
-	
+
+	void DisplayRuntimeAbilityTweakerWidget();
 	virtual void BeginPlay() override;
 
 private:

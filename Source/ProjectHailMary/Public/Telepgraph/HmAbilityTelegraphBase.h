@@ -44,7 +44,7 @@ public:
 	
 	//The Base Material to be added in the Editor
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Decal Material")
-	TObjectPtr<UMaterial> DecalMaterial = nullptr;
+	TObjectPtr<UMaterialInstance> DecalMaterial = nullptr;
 
 	//The Dynamic Material Converter in C++ and Editable via Encounter Graph
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Decal Material")
@@ -52,14 +52,15 @@ public:
 
 	UFUNCTION()
 	void ChangeDecalSize(FVector NewDecalSize);
+	
+	UFUNCTION()
+	void AdjustDecalComponentOffsetLocation(FVector DecalCompSize);
 
 	virtual void Tick(float DeltaTime) override;
 protected:
 
 	virtual void BeginPlay() override;
 
-	UFUNCTION()
-	void AdjustDecalComponentOffsetLocation(FVector DecalCompSize);
 
 
 private:

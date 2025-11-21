@@ -6,23 +6,13 @@
 #include "Blueprint/UserWidget.h"
 #include "UI/Widgets/HmAbilityTelegraphTweaker.h"
 
+
+
 void AHmHud::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (HasAuthority())
-	{
-		APlayerController* PC = GetOwningPlayerController();
-		if (TeleDataWidgetTweakerClass && PC)
-		{
-			WidgetTweakerRef = Cast<UHmAbilityTelegraphTweaker>(CreateWidget<UUserWidget>(PC, TeleDataWidgetTweakerClass));
-			if (WidgetTweakerRef)
-			{
-				WidgetTweakerRef->AddToViewport(1);
-				ShowWidget(WidgetTweakerRef);
-			}
-		}
-	}
+	//DisplayRuntimeAbilityTweakerWidget();
 }
 
 void AHmHud::ShowWidget(UUserWidget* Widget)
@@ -38,5 +28,22 @@ void AHmHud::HideWidget(UUserWidget* Widget)
 	if (Widget && Widget->GetVisibility() == ESlateVisibility::Visible)
 	{
 		Widget->SetVisibility(ESlateVisibility::Hidden);
+	}
+}
+
+void AHmHud::DisplayRuntimeAbilityTweakerWidget()
+{
+	if (HasAuthority())
+	{
+		APlayerController* PC = GetOwningPlayerController();
+		if (TeleDataWidgetTweakerClass && PC)
+		{
+			WidgetTweakerRef = Cast<UHmAbilityTelegraphTweaker>(CreateWidget<UUserWidget>(PC, TeleDataWidgetTweakerClass));
+			if (WidgetTweakerRef)
+			{
+				WidgetTweakerRef->AddToViewport(1);
+				ShowWidget(WidgetTweakerRef);
+			}
+		}
 	}
 }

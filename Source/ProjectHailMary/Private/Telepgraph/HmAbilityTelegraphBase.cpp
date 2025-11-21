@@ -4,7 +4,6 @@
 #include "Telepgraph/HmAbilityTelegraphBase.h"
 #include "Components/BoxComponent.h"
 #include "Components/DecalComponent.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "Net/UnrealNetwork.h"
 
 
@@ -55,7 +54,7 @@ AHmAbilityTelegraphBase::AHmAbilityTelegraphBase()
 	//Will call an initial Location Adjustment, making the Scene Component at the edge of the decal component
 	//making the scene component a "Proxy Pivot Point"
 	//When then use the scene component to handle rotation of the decal.
-	ChangeDecalSize(DecalComponent->DecalSize);
+	//ChangeDecalSize(DecalComponent->DecalSize, true);
 
 	if (DecalMaterial)
 	{
@@ -71,8 +70,7 @@ void AHmAbilityTelegraphBase::ChangeDecalSize(FVector NewDecalSize)
 	DecalComponent->DecalSize.Z = NewDecalSize.Z;
 
 	BoxComponent->SetBoxExtent(NewDecalSize);
-
-	AdjustDecalComponentOffsetLocation(DecalComponent->DecalSize);
+	
 }
 
 // Called when the game starts or when spawned
@@ -134,17 +132,8 @@ void AHmAbilityTelegraphBase::UpdateDynamicMaterialInstance_Client()
 	
 }
 
-// Called every frame
 void AHmAbilityTelegraphBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (IsValid(TargetActor) && !bIsLockedInPlace)
-	{
-		FVector RootLocation = RootComponent->GetComponentLocation();
-		FVector TargetLocation = TargetActor->GetActorLocation();
-		FRotator AmountToRotate = UKismetMathLibrary::FindLookAtRotation(RootLocation, TargetLocation);
-		RootComponent->SetRelativeRotation(AmountToRotate);
-	}
 }
 
