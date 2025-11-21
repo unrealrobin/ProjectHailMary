@@ -3,12 +3,22 @@
 
 #include "Telepgraph/HmAbilityTelegraphCircle.h"
 
+#include "Components/DecalComponent.h"
+
 
 // Sets default values
 AHmAbilityTelegraphCircle::AHmAbilityTelegraphCircle()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void AHmAbilityTelegraphCircle::ChangeDecalSize(FVector NewDecalSize)
+{
+	FVector Size = FVector(Data.Radius, Data.Radius, Data.Radius);
+	DecalComponent->DecalSize = Size;
+
+	UE_LOG(LogTemp, Warning, TEXT("Changing Decal Size in Circle."))
 }
 
 // Called when the game starts or when spawned

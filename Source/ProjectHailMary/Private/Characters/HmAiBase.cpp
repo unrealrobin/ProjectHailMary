@@ -22,14 +22,15 @@ AHmAiBase::AHmAiBase()
 
 	CollisionBoxComponent = CreateDefaultSubobject<UBoxComponent>("Collision Box Component");
 	RootComponent = CollisionBoxComponent;
+	
+	AiProjectileStartComponent = CreateDefaultSubobject<USceneComponent>("Projectile Start Component");
+	AiProjectileStartComponent->SetupAttachment(RootComponent);
+	
 	if (USkeletalMeshComponent* theMesh = GetMesh())
 	{
 		theMesh->SetupAttachment(RootComponent);
 	}
-	if (UCapsuleComponent* Capsule = GetCapsuleComponent())
-	{
-		Capsule->SetupAttachment(RootComponent);
-	}
+	
 	
 	AiASC = CreateDefaultSubobject<UHmAbilitySystemComponent>("Ability System Component");
 	AiASC->SetIsReplicated(true);

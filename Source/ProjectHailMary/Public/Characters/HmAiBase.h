@@ -44,6 +44,9 @@ public:
 	TObjectPtr<USceneComponent> AiTargetSceneComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	TObjectPtr<USceneComponent> AiProjectileStartComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	TObjectPtr<UBoxComponent> CollisionBoxComponent;
 	
 	virtual void Tick(float DeltaTime) override;

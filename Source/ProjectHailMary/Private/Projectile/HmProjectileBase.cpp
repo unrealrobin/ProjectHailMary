@@ -29,13 +29,15 @@ void AHmProjectileBase::InitPropsFromGA(UAbilitySystemComponent* SourceASC, TSub
 void AHmProjectileBase::HandleProjectileOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Projectile Overlapped: %s "), *OtherActor->GetName())
+	UE_LOG(LogTemp, Warning, TEXT("Projectile Overlapped: %s "), *GetName())
+	Destroy();
 }
 
 void AHmProjectileBase::HandleProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Projectile Hit: %s "), *OtherActor->GetName())
+	UE_LOG(LogTemp, Warning, TEXT("Projectile Hit: %s "), *GetName())
+	Destroy();
 }
 
 // Called when the game starts or when spawned
@@ -45,11 +47,19 @@ void AHmProjectileBase::BeginPlay()
 
 	BoxCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &AHmProjectileBase::HandleProjectileOverlap);
 	BoxCollisionComponent->OnComponentHit.AddDynamic(this, &AHmProjectileBase::HandleProjectileHit);
+
+	FTimerHandle DestroyTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &AHmProjectileBase::NoHitDestroy, AutoDestroyTime, false);
 }
 
 // Called every frame
 void AHmProjectileBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AHmProjectileBase::NoHitDestroy()
+{
+	Destroy();
 }
 

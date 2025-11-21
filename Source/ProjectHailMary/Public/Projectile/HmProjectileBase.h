@@ -21,6 +21,9 @@ class PROJECTHAILMARY_API AHmProjectileBase : public AActor
 public:
 	// Sets default values for this actor's properties
 	AHmProjectileBase();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
+	float AutoDestroyTime = 2.0f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
 	UStaticMeshComponent* ProjectileMeshComponent;
@@ -43,6 +46,8 @@ public:
 	                     TSubclassOf<UGameplayEffect> GE,
 	                     const FGameplayEffectContextHandle& CtxIn);
 
+	UFUNCTION()
+	void NoHitDestroy();
 protected:
 
 	UFUNCTION()
@@ -57,4 +62,6 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+private:
 };

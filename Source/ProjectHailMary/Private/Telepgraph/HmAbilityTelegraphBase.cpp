@@ -7,6 +7,7 @@
 #include "Net/UnrealNetwork.h"
 
 
+
 void AHmAbilityTelegraphBase::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -17,7 +18,9 @@ void AHmAbilityTelegraphBase::OnRep_BossTelegraphData(FBossAbilityTelegraphData 
 {
 	FVector DecalSize(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
 	ChangeDecalSize(DecalSize);
+	AdjustDecalComponentOffsetLocation(DecalSize);
 
+	
 	UE_LOG(LogTemp, Warning, TEXT("OnRep for Data fired."))
 	//Apply Dynamic Material with Colors from Data.
 	
@@ -84,9 +87,7 @@ void AHmAbilityTelegraphBase::BeginPlay()
 
 void AHmAbilityTelegraphBase::AdjustDecalComponentOffsetLocation(FVector DecalCompSize)
 {
-	FVector OffsetLocation = FVector(DecalCompSize.X, 0.f, 0.f);
-	DecalComponent->SetRelativeLocation(OffsetLocation);
-	BoxComponent->SetRelativeLocation(OffsetLocation);
+	// Override this in individual Telegraph classes
 }
 
 void AHmAbilityTelegraphBase::InitializeDynamicMaterial()

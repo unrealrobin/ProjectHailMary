@@ -3,6 +3,8 @@
 
 #include "Telepgraph/HmAbilityTelegraphRectangle.h"
 
+#include "Components/BoxComponent.h"
+#include "Components/DecalComponent.h"
 #include "Kismet/KismetMathLibrary.h"
 
 
@@ -11,6 +13,13 @@ AHmAbilityTelegraphRectangle::AHmAbilityTelegraphRectangle()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void AHmAbilityTelegraphRectangle::AdjustDecalComponentOffsetLocation(FVector DecalCompSize)
+{
+	FVector OffsetLocation = FVector(DecalCompSize.X, 0.f, 0.f);
+	DecalComponent->SetRelativeLocation(OffsetLocation);
+	BoxComponent->SetRelativeLocation(OffsetLocation);
 }
 
 // Called when the game starts or when spawned

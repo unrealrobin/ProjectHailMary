@@ -15,6 +15,8 @@ public:
 	// Sets default values for this actor's properties
 	AHmAbilityTelegraphCircle();
 
+	virtual void ChangeDecalSize(FVector NewDecalSize) override;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

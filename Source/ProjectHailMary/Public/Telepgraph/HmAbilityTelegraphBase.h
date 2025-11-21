@@ -51,10 +51,10 @@ public:
 	TObjectPtr<UMaterialInstanceDynamic> DynamicDecalMaterial = nullptr;
 
 	UFUNCTION()
-	void ChangeDecalSize(FVector NewDecalSize);
+	virtual void ChangeDecalSize(FVector NewDecalSize);
 	
 	UFUNCTION()
-	void AdjustDecalComponentOffsetLocation(FVector DecalCompSize);
+	virtual void AdjustDecalComponentOffsetLocation(FVector DecalCompSize);
 
 	virtual void Tick(float DeltaTime) override;
 protected:
