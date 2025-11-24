@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AbilitySystemInterface.h"
 #include "Characters/HmCharacterBase.h"
+#include "Encounters/Interfaces/EncounterParticipant.h"
 #include "HmAiBase.generated.h"
 
 class AHmArenaVolumeRectangle;
@@ -15,7 +16,7 @@ class UHmAbilitySystemComponent;
 class UBehaviorTreeComponent;
 
 UCLASS()
-class PROJECTHAILMARY_API AHmAiBase : public AHmCharacterBase, public IAbilitySystemInterface
+class PROJECTHAILMARY_API AHmAiBase : public AHmCharacterBase, public IAbilitySystemInterface, public IEncounterParticipant
 {
 	GENERATED_BODY()
 

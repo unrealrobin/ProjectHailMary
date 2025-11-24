@@ -3,21 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "HmAbilityTelegraphBase.h"
-#include "HmAbilityTelegraphCircle.generated.h"
+#include "GameFramework/Actor.h"
+#include "HmEncounterCoordinator.generated.h"
 
 UCLASS()
-class PROJECTHAILMARY_API AHmAbilityTelegraphCircle : public AHmAbilityTelegraphBase
+class PROJECTHAILMARY_API AHmEncounterCoordinator : public AActor
 {
 	GENERATED_BODY()
 
 public:
 	// Sets default values for this actor's properties
-	AHmAbilityTelegraphCircle();
-
-	virtual void ChangeDecalSize(FVector NewDecalSize) override;
-
-	virtual void HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData);
+	AHmEncounterCoordinator();
 
 protected:
 	// Called when the game starts or when spawned

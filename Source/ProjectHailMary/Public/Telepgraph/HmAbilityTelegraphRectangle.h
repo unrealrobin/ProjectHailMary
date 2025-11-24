@@ -15,6 +15,7 @@ public:
 	// Sets default values for this actor's properties
 	AHmAbilityTelegraphRectangle();
 
+	virtual void HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData);
 	virtual void AdjustDecalComponentOffsetLocation(FVector DecalCompSize) override;
 
 protected:

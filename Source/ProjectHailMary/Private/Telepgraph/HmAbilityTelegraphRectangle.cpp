@@ -15,6 +15,13 @@ AHmAbilityTelegraphRectangle::AHmAbilityTelegraphRectangle()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
+void AHmAbilityTelegraphRectangle::HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData)
+{
+	const FVector V(TelegraphData.BoxLength, TelegraphData.BoxWidth, TelegraphData.BoxHeight);
+	ChangeDecalSize(V);
+	AdjustDecalComponentOffsetLocation(V);
+}
+
 void AHmAbilityTelegraphRectangle::AdjustDecalComponentOffsetLocation(FVector DecalCompSize)
 {
 	FVector OffsetLocation = FVector(DecalCompSize.X, 0.f, 0.f);

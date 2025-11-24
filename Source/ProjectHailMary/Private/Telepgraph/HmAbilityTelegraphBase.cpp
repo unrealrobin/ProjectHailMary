@@ -14,10 +14,23 @@ void AHmAbilityTelegraphBase::GetLifetimeReplicatedProps(TArray<class FLifetimeP
 	DOREPLIFETIME(AHmAbilityTelegraphBase, Data);
 }
 
+void AHmAbilityTelegraphBase::UpdateRotation_Client()
+{
+	FRotator Rotation = GetActorRotation();
+	
+	Rotation.Pitch += Data.SpawnRotation.Pitch;
+	Rotation.Yaw += Data.SpawnRotation.Yaw;
+	Rotation.Roll += Data.SpawnRotation.Roll;
+	
+	DecalComponent->SetRelativeRotation(Rotation);
+}
+
 void AHmAbilityTelegraphBase::OnRep_BossTelegraphData(FBossAbilityTelegraphData OldBossTelegraphData)
 {
 	FVector DecalSize(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
 	ChangeDecalSize(DecalSize);
+
+	//Some Telegraph actors dont override this, doing nothing.
 	AdjustDecalComponentOffsetLocation(DecalSize);
 
 	
@@ -25,6 +38,8 @@ void AHmAbilityTelegraphBase::OnRep_BossTelegraphData(FBossAbilityTelegraphData 
 	//Apply Dynamic Material with Colors from Data.
 	
 	UpdateDynamicMaterialInstance_Client();
+
+	UpdateRotation_Client();
 }
 
 // Sets default values
@@ -64,6 +79,10 @@ AHmAbilityTelegraphBase::AHmAbilityTelegraphBase()
 		DecalComponent->SetDecalMaterial(DecalMaterial);
 	}
 	
+}
+
+void AHmAbilityTelegraphBase::HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData)
+{
 }
 
 void AHmAbilityTelegraphBase::ChangeDecalSize(FVector NewDecalSize)
@@ -129,7 +148,7 @@ void AHmAbilityTelegraphBase::UpdateDynamicMaterialInstance_Client()
 		DynamicDecalMaterial->SetScalarParameterValue("TelegraphOpac", Data.TelegraphOpac);
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("TelegraphActor UpdateDynamicMaterialInstance Color on %s"),HasAuthority() ? TEXT("SERVER") : TEXT("CLIENT"));
+	//UE_LOG(LogTemp, Warning, TEXT("TelegraphActor UpdateDynamicMaterialInstance Color on %s"),HasAuthority() ? TEXT("SERVER") : TEXT("CLIENT"));
 	
 }
 

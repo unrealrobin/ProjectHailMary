@@ -36,46 +36,49 @@ void UHmGaBossCircleAbility::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 
 	if (AbilityTelegraphClass)
 	{
+		//Init of Data Struct
+		Data = FBossAbilityTelegraphData();
+		ConstructAbilityData(AbilityTelegraphDataTableRowName, Data);
+		
 		//Spawn the circle telegraph actor based on the size gathered from the Data Table
 		FActorSpawnParameters SpawnParams;
 
 		//Transform for Deferred Spawn
 		const FVector TelegraphSpawnLocation = RandomPlayerCharacter->GetActorLocation();
-		FRotator TelegraphSpawnRotation = RandomPlayerCharacter->GetActorRotation();
-		TelegraphSpawnRotation.Pitch = TelegraphSpawnRotation.Pitch + 90.0f;
+		FRotator TelegraphSpawnRotation = Data.SpawnRotation;
+		UE_LOG(LogTemp, Error, TEXT("Roll: %f, Pitch: %f, Yaw: %f"), Data.SpawnRotation.Roll, Data.SpawnRotation.Pitch, Data.SpawnRotation.Yaw)
+		
+		//TelegraphSpawnRotation.Pitch = TelegraphSpawnRotation.Pitch + 90.0f;
 		const FTransform T(TelegraphSpawnRotation, TelegraphSpawnLocation);
 		
 		AActor* DeferredActor = GetWorld()->SpawnActorDeferred<AActor>(AbilityTelegraphClass, T);
 		if (!DeferredActor) EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		TelegraphActor = Cast<AHmAbilityTelegraphBase>(DeferredActor);
 		if (!TelegraphActor) EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
-
-		//Init of Data Struct
-		Data = FBossAbilityTelegraphData();
-
-		//TODO:: THis will need some tweaking as only some of the Data Requirements are UnNecessary (Ex. Box height/Width/length)
+		
 
 		//Checking if Telegraph Manager is In World. Simple changing where the Original Data Comes From.
 		//Telegraph Manager Actor Data can be modified at runtime.
 		//Development
-		AHmTelegraphCache_Rep* TelegraphManager = Cast<AHmTelegraphCache_Rep>(UGameplayStatics::GetActorOfClass(GetWorld(), AHmTelegraphCache_Rep::StaticClass()));
+		/*AHmTelegraphCache_Rep* TelegraphManager = Cast<AHmTelegraphCache_Rep>(UGameplayStatics::GetActorOfClass(GetWorld(), AHmTelegraphCache_Rep::StaticClass()));
 		if (TelegraphManager)
 		{
 			Data = TelegraphManager->TelegraphCacheData;
 			TelegraphActor->Data = Data;
 		}
-		else
+		*/
+		/*else
 		{
 			//Uses the Constructed Data Struct from the Data Table.
 			//Production
 			ConstructAbilityData(AbilityTelegraphDataTableRowName, Data);
 			TelegraphActor->Data = Data;
 		}
+		*/
 
-		//Circle Ability has a Circle Telegraph
-		FVector DecalSize = FVector(Data.Radius, Data.Radius, Data.Radius);
-		TelegraphActor->ChangeDecalSize(DecalSize);
-
+		//Changing Decal Size + Material Data (Override Function from Base Class)
+		TelegraphActor->HandleSpawnInitializationWithData(Data);
+		
 		//Setting the Target on the Telegraoh Instance
 		TelegraphActor->TargetActor = RandomPlayerCharacter;
 		TelegraphActor->FinishSpawning(T);

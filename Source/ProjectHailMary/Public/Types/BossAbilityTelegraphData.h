@@ -28,13 +28,16 @@ struct FBossAbilityTelegraphData
 	float BoxWidth;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
 	float BoxHeight;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Item")
+	FRotator SpawnRotation;
 
 	FBossAbilityTelegraphData() : AngleDeg(0), Radius(0),
 	                              FollowTime(0),
 	                              LockTime(0),
-									TelegraphColorBase(FLinearColor::Blue), TelegraphColorEmis(FLinearColor::Blue), TelegraphOpac(1.f),
+	                              TelegraphColorBase(FLinearColor::Blue), TelegraphColorEmis(FLinearColor::Blue),
+	                              TelegraphOpac(1.f),
 	                              BoxLength(0),
-	                              BoxWidth(0), BoxHeight(0)
+	                              BoxWidth(0), BoxHeight(0), SpawnRotation(0,0,0)
 
 	{
 	}

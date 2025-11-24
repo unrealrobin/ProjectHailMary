@@ -38,6 +38,7 @@ void UHmGA_Base::ConstructAbilityData(FName AbilityRowName, FBossAbilityTelegrap
 			InData.TelegraphColorBase = Row->TelegraphData.TelegraphColorBase;
 			InData.TelegraphColorEmis = Row->TelegraphData.TelegraphColorEmis;
 			InData.TelegraphOpac = Row->TelegraphData.TelegraphOpac;
+			InData.SpawnRotation = Row->TelegraphData.SpawnRotation;
 		}
 	}
 }

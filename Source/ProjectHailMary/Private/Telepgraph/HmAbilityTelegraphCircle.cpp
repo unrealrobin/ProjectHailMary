@@ -15,10 +15,16 @@ AHmAbilityTelegraphCircle::AHmAbilityTelegraphCircle()
 
 void AHmAbilityTelegraphCircle::ChangeDecalSize(FVector NewDecalSize)
 {
-	FVector Size = FVector(Data.Radius, Data.Radius, Data.Radius);
-	DecalComponent->DecalSize = Size;
+	DecalComponent->DecalSize = NewDecalSize;
 
 	UE_LOG(LogTemp, Warning, TEXT("Changing Decal Size in Circle."))
+}
+
+void AHmAbilityTelegraphCircle::HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData)
+{
+	Super::HandleSpawnInitializationWithData(TelegraphData);
+	FVector DecalSize = FVector(TelegraphData.Radius, TelegraphData.Radius, TelegraphData.Radius);
+	ChangeDecalSize(DecalSize);
 }
 
 // Called when the game starts or when spawned
@@ -32,7 +38,7 @@ void AHmAbilityTelegraphCircle::BeginPlay()
 void AHmAbilityTelegraphCircle::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("SHould be moving."))
+	//UE_LOG(LogTemp, Warning, TEXT("SHould be moving."))
 	if (IsValid(TargetActor) && !bIsLockedInPlace)
 	{
 		FVector TargetLocation = TargetActor->GetActorLocation();

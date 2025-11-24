@@ -21,10 +21,17 @@ public class ProjectHailMary : ModuleRules
 			"UMG", 
 			"AIModule",
 			"Slate",
-			"SlateCore"
+			"SlateCore",
+			
 		});
 
-		PrivateDependencyModuleNames.AddRange(new string[] {  });
+		PrivateDependencyModuleNames.AddRange(new string[]
+		{
+			"Blutility",
+			"UMGEditor",
+			"EditorScriptingUtilities",
+			"ScriptableEditorWidgets",
+		});
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });

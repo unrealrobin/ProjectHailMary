@@ -95,11 +95,11 @@ void UHmGaBossRectAbility::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 			TelegraphActor->Data = Data;
 		}
 		
-		
-		FVector DecalSize = FVector(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
+		TelegraphActor->HandleSpawnInitializationWithData(Data);
+		/*FVector DecalSize = FVector(Data.BoxLength, Data.BoxWidth, Data.BoxHeight);
 		//ServerSide Call
 		TelegraphActor->ChangeDecalSize(DecalSize);
-		TelegraphActor->AdjustDecalComponentOffsetLocation(DecalSize);
+		TelegraphActor->AdjustDecalComponentOffsetLocation(DecalSize);*/
 		
 		//Initializing Defaults on Telegraph Actor
 		TelegraphActor->TargetActor = RandomPlayerCharacter;

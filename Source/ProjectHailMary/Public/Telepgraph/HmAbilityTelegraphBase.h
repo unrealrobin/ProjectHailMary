@@ -19,6 +19,8 @@ public:
 
 	AHmAbilityTelegraphBase();
 
+	void UpdateRotation_Client();
+
 	virtual void GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& OutLifetimeProps) const override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Arena")
@@ -29,7 +31,7 @@ public:
 
 	UPROPERTY(VisibleAnywhere, Category="TelegraphData",ReplicatedUsing = OnRep_BossTelegraphData)
 	FBossAbilityTelegraphData Data;
-
+	
 	UFUNCTION()
 	void OnRep_BossTelegraphData(FBossAbilityTelegraphData OldBossTelegraphData);
 	
@@ -50,6 +52,9 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Decal Material")
 	TObjectPtr<UMaterialInstanceDynamic> DynamicDecalMaterial = nullptr;
 
+	UFUNCTION(BlueprintCallable)
+	virtual void HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData);
+
 	UFUNCTION()
 	virtual void ChangeDecalSize(FVector NewDecalSize);
 	
@@ -60,8 +65,6 @@ public:
 protected:
 
 	virtual void BeginPlay() override;
-
-
 
 private:
 	void InitializeDynamicMaterial();
