@@ -58,7 +58,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void ChangeDecalSize(FVector NewDecalSize);
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	virtual void AdjustDecalComponentOffsetLocation(FVector DecalCompSize);
 
 	virtual void Tick(float DeltaTime) override;

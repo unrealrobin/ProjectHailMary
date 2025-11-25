@@ -19,12 +19,12 @@ struct FTelegraphData : public FTableRowBase
 	FBossAbilityTelegraphData TelegraphData;
 
 	//Can be used for Checks/Gaurds
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boss Telegraph Data")
-	TSubclassOf<AHmCharacterBase> CharacterClass;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boss Telegraph Data")
+	TSubclassOf<AHmCharacterBase> CharacterClass;*/
 
 	//Can be used for Checks/Gaurds
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boss Telegraph Data")
-	TSubclassOf<UHmGA_Base> TelegraphedAbilityClass = nullptr;
+	/*UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Boss Telegraph Data")
+	TSubclassOf<UHmGA_Base> TelegraphedAbilityClass = nullptr;*/
 };
 
 /**

@@ -92,7 +92,7 @@ void UHmAbilityTelegraphTweaker::CreateWidgetsFromDataTable()
 		if (Row && VertTelegraphBox)
 		{
 			WidgetUpdateValues = Row->TelegraphData;
-			CreateAbilityInfoWidgetFromDataTable(Row->CharacterClass, Row->TelegraphedAbilityClass, TelegraphRowName);
+			//CreateAbilityInfoWidgetFromDataTable(Row->CharacterClass, Row->TelegraphedAbilityClass, TelegraphRowName);
 			CreateColorWidget("Color Base", Row->TelegraphData.TelegraphColorBase );
 			CreateColorWidget("Emissive Color", Row->TelegraphData.TelegraphColorEmis );
 			CreateSliderWidget("T.Opacity", 0.0f, 1.0f, Row->TelegraphData.TelegraphOpac);
