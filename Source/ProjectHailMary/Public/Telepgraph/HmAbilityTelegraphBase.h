@@ -55,7 +55,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void HandleSpawnInitializationWithData(FBossAbilityTelegraphData TelegraphData);
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	virtual void ChangeDecalSize(FVector NewDecalSize);
 	
 	UFUNCTION()
